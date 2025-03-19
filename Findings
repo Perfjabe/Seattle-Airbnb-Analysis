@@ -1,0 +1,169 @@
+Findings Summary: Seattle Airbnb Analysis
+
+1. Calendar Data Insights
+
+Data Overview
+
+Total Rows: 1,048,575
+
+Unique Rows: No duplicates (Verified using listing_id and date)
+
+Missing Data: No missing values in listing_id, date, price, minimum_nights, or maximum_nights.
+
+Date Range
+
+Earliest Date: September 21, 2024
+
+Latest Date: September 20, 2025
+
+Covers a full year, making it useful for seasonal trend analysis.
+
+Pricing Insights
+
+Minimum Price: $20
+
+Maximum Price: $3,000
+
+Average Price: $177.87
+
+Minimum & Maximum Nights
+
+Minimum Stay: 1 night
+
+Maximum Stay: 10,000 nights (likely an outlier)
+
+Typical Maximum Stay: 365 nights (1 year)
+
+Availability Trends by Date & Month
+
+Peak Demand (Lowest Availability):
+
+September 21, 2024: 9.95% availability (Highest occupancy)
+
+September 2024: 28.51% availability (Busiest month)
+
+August & September 2025: 37-38% availability
+
+Low Demand (Highest Availability):
+
+December 17, 2024: 73.55% availability (Lowest occupancy)
+
+December 2024 & January 2025: 65.68% - 64.15% availability
+
+Key Takeaways
+
+✅ Strong seasonality, with peak demand in late summer and early fall, and lower bookings in winter months.
+✅ Prices range from $20 to $3,000, with an average of $177.87.
+✅ Some properties allow 10,000-night stays, indicating potential data outliers.
+
+2. Listings Data Insights
+
+Market Concentration & Competition
+
+1️⃣ Seattle’s Airbnb market is highly concentrated in Broadway, Belltown, and U-District.
+
+These areas have the highest competition & supply.
+
+Pricing & demand strategies are critical for success.
+
+2️⃣ Luxury listings ($3,000+) struggle with bookings.
+
+Most sit vacant with 0 reviews, suggesting a need for different marketing or pricing adjustments.
+
+3️⃣ Entire homes dominate the market (5,099 listings), but private & shared rooms may be underutilized opportunities.
+
+Potential market gap for affordable shared spaces or mid-range stays.
+
+4️⃣ Pricing trends suggest that budget-friendly listings ($79-$125) receive the highest engagement.
+
+High-priced listings ($500+) may require pricing adjustments to improve occupancy rates.
+
+3. Guest Engagement & Reviews Data Insights
+
+✅ Review Growth & Market Expansion
+
+2024 has a record-high 4,767 active listings, showing rapid Airbnb expansion.
+
+Older listings (pre-2020) are mostly inactive, suggesting shifts in host engagement or regulations.
+
+✅ Pricing & Demand Relationships
+
+Prices peaked in 2015 ($288.5) but have declined since, stabilizing at $182.48 in 2024.
+
+Budget listings ($79-$125) dominate in total reviews, proving affordability drives demand.
+
+✅ Guest Review Engagement
+
+Most reviewed listing has 1,450 reviews, showing strong guest engagement.
+
+Review counts peaked in 2023 (107,945 reviews).
+
+Belltown remains a high-demand area with strong guest activity.
+
+✅ Availability & Demand Patterns
+
+Higher-priced listings tend to have higher availability (less demand).
+
+Lower-priced listings see more bookings and higher review counts.
+
+Luxury listings ($300+) often sit vacant with little guest engagement.
+
+4. SQL Query Findings
+
+Neighborhood-Specific Availability & Pricing
+
+University District, Broadway, and Harrison/Denny-Blaine have 100% availability, even at mid-range prices ($109 - $195), indicating over-supply.
+
+Industrial District has the highest avg price ($800) and 100% availability, indicating zero demand.
+
+Pioneer Square & International District have high availability (75%+), suggesting weak demand.
+
+Pike-Market & Central Business District maintain better demand (~65% availability) despite higher avg prices ($235-$243).
+
+Review & Price Insights
+
+Low-cost listings (<$100) receive the most engagement, confirming affordability as a key factor.
+
+Whittier Heights, Southeast Magnolia, and Central Business District dominate in guest reviews.
+
+Luxury listings ($9,000-$3,000) have almost no reviews, indicating low demand for ultra-luxury stays.
+
+Some moderately priced luxury listings ($1,000-$2,000) have slightly better engagement but still low occupancy.
+
+Seasonal Pricing Trends
+
+Prices remain stable at ~$171.4 across all months, indicating a flat pricing strategy.
+
+Availability drops sharply in summer (May-Aug), confirming peak booking season.
+
+Winter months (Nov-Jan) see higher availability, confirming seasonal demand shifts.
+
+High-Demand Neighborhoods
+
+Interbay, Portage Bay, and Victory Heights have the highest demand, with 307-233 avg reviews.
+
+Rainier View has the highest avg price ($365) but maintains strong demand with 28% availability.
+
+Popular mid-range neighborhoods like Portage Bay ($185) and View Ridge ($183) have high reviews, indicating strong demand.
+
+5. Final Takeaways & Business Recommendations
+
+1️⃣ Pricing Adjustments Needed
+
+✅ Dynamic pricing should be implemented to reduce winter vacancies and maximize peak-season revenue.
+✅ Luxury listings should reconsider pricing strategies, as ultra-high-end options struggle with demand.
+
+2️⃣ Neighborhood-Specific Strategies
+
+✅ Hosts in high-vacancy neighborhoods (Industrial District, Briarcliff, Roxhill) should lower prices or adjust offerings.
+✅ High-demand areas (Portage Bay, Interbay, Victory Heights) could support higher pricing or increased listings.
+
+3️⃣ Budget-Friendly Options Drive Engagement
+
+✅ Lower-priced listings under $100 dominate guest engagement and reviews.
+✅ New hosts should consider offering competitive pricing in high-demand locations.
+
+4️⃣ Marketing & Listing Optimization
+
+✅ Broadway & International District have high availability but also high review counts, meaning listings might need better marketing rather than just price cuts.
+✅ Hosts should consider offering discounts for long-term stays during off-peak months to improve occupancy.
