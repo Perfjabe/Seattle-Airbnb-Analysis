@@ -1,0 +1,120 @@
+SELECT 
+    COUNT(*) AS total_rows
+FROM `seattleairbnb-450821.airbnb.listings`;
+
+-- 6,541 total rows
+
+SELECT 
+    COUNT(*) AS total_rows, 
+    COUNT(DISTINCT id) AS unique_ids
+FROM `seattleairbnb-450821.airbnb.listings`;
+
+-- 6,541 unique ids
+
+SELECT 
+    COUNT(*) AS null_id_count,
+    COUNT(*) AS null_price_count,
+    COUNT(*) AS null_name_count
+FROM `seattleairbnb-450821.airbnb.listings`
+WHERE id IS NULL OR price IS NULL OR name IS NULL;
+
+-- 435 nulls in each
+
+CREATE OR REPLACE TABLE `seattleairbnb-450821.airbnb.listings_cleaned` AS
+SELECT * 
+FROM `seattleairbnb-450821.airbnb.listings`
+WHERE id IS NOT NULL AND price IS NOT NULL AND name IS NOT NULL;
+
+SELECT 
+    COUNT(*) AS null_count
+FROM `seattleairbnb-450821.airbnb.listings_cleaned`
+WHERE id IS NULL OR price IS NULL OR name IS NULL;
+
+-- no nulls
+
+
+SELECT 
+    COUNT(*) AS total_rows, 
+    COUNT(DISTINCT id) AS unique_listings
+FROM `seattleairbnb-450821.airbnb.listings_cleaned`;
+
+-- 6106 total rows 6106 unique listings
+
+CREATE OR REPLACE TABLE `seattleairbnb-450821.airbnb.listings_final` AS
+WITH price_median AS (
+    SELECT PERCENTILE_CONT(price, 0.5) OVER() AS median_price
+    FROM `seattleairbnb-450821.airbnb.listings_cleaned`
+)
+SELECT 
+    *, 
+    CASE 
+        WHEN price < 10 THEN (SELECT DISTINCT median_price FROM price_median) 
+        ELSE price 
+    END AS adjusted_price
+FROM `seattleairbnb-450821.airbnb.listings_cleaned`;
+
+-- This ensures no listings have unrealistic prices (e.g., $1, $2, $5).
+
+SELECT 
+    MIN(price) AS min_price,
+    MAX(price) AS max_price,
+    ROUND(AVG(price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final`;
+
+-- $8 min, $9,000 max, $191.74 avg
+
+SELECT 
+    neighbourhood, 
+    COUNT(*) AS total_listings
+FROM `seattleairbnb-450821.airbnb.listings_final`
+GROUP BY neighbourhood
+ORDER BY total_listings DESC;
+
+-- Broadway (356), Belltown (335), & U-District (250) have the most listings
+-- Holly park (1), Industrial District (1) & Meadowbrook & Rainier View (9) have the least listings
+
+SELECT 
+    neighbourhood, 
+    ROUND(AVG(adjusted_price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final`
+GROUP BY neighbourhood
+ORDER BY avg_price DESC;
+
+-- Industrial District 800.0, Laurelhurst 384.89, Phinney Ridge 281.11 Top 3 Avg Price
+
+SELECT id, name, neighbourhood, adjusted_price
+FROM `seattleairbnb-450821.airbnb.listings_final`
+ORDER BY adjusted_price DESC
+LIMIT 10;
+
+-- Woodland (Ground Unit) Calendar ($9,000) The Cascades Penthouse ($6,000) The Evergreen Penthouse ($6,000) top 3 most expensive
+
+SELECT room_type, COUNT(*) AS total_listings
+FROM `seattleairbnb-450821.airbnb.listings_final`
+GROUP BY room_type
+ORDER BY total_listings DESC;
+
+-- Entire home/apt (5099) Private room (977) Hotel room (21) Shared room (9)
+
+SELECT 
+    neighbourhood, COUNT(*) AS total_listings, ROUND(AVG(adjusted_price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final`
+GROUP BY neighbourhood
+ORDER BY total_listings DESC;
+
+-- Broadway is the highest availability with 179.94 avg price
+
+SELECT id, name, adjusted_price, availability_365, number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final`
+WHERE adjusted_price > 3000
+ORDER BY adjusted_price DESC;
+
+-- most high priced listings are siting vacant with 0 rewivews and high availability until Woodland Park's (Top Floor) Calendar
+
+SELECT room_type, ROUND(AVG(adjusted_price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final`
+GROUP BY room_type
+ORDER BY avg_price DESC;
+
+-- Average prices. Hotel room (458.76), Entire home/apt (206.66), Private room (110.25), Shared room (91.44)
+
