@@ -1,48 +1,132 @@
-# Seattle Airbnb Analysis 🏠📊
+Seattle Airbnb Analysis 🏠📊
 
-## 📌 Overview
-This project analyzes Seattle Airbnb data to uncover insights on **pricing trends, occupancy rates, and revenue generation** across different neighborhoods.
+📌 Overview
 
-## 🔍 Key Insights
-- **Luxury listings struggle with occupancy.** Dynamic pricing is needed to reduce winter vacancies.
-- **High-demand areas like Interbay & Portage Bay can support higher pricing.**
-- **Budget-friendly listings dominate guest engagement.**
-- **Broadway & International District need better marketing, not just price cuts.**
+This project explores Seattle Airbnb data to understand pricing trends, occupancy rates, and revenue across neighborhoods.
 
-## 📊 Visuals & Findings
-🔗 **Tableau Dashboard:** [Seattle Airbnb Public Dashboard](your-tableau-public-link)
+📂 Datasets Used
 
-| Analysis | Key Visuals |
-|----------|------------|
-| **Revenue & Occupancy Trends** | 📊 Bar charts & scatter plots |
-| **Price Distribution** | 🏠 By neighborhood & room type |
-| **Seasonal Price Fluctuation** | 📈 Monthly trends |
+[Inside Airbnb Open Data](https://insideairbnb.com/get-the-data/)
 
-## 💡 Recommendations
-1. **Optimize pricing dynamically** to reduce seasonal revenue loss.
-2. **Target high-demand areas** for expansion.
-3. **Improve listing descriptions & promotions** to increase engagement.
-4. **Use long-term stay discounts** in low-occupancy months.
+Listings.csv: Airbnb listing details (location, price, reviews).
 
-## 🛠 Tools Used
-- **Tableau** (Data Visualization)
-- **SQL & Python (Optional, if applicable)**
-- **GitHub** (Project Hosting)
+Calendar.csv: Availability and pricing over time.
 
-## 📥 Data Source
-Seattle Airbnb Open Data (Kaggle, Inside Airbnb)
+Reviews.csv: Customer ratings and feedback.
 
----
+Neighborhoods.csv & GeoJSON: Neighborhood location data.
 
-## **📌 Step 5: Share Your Work**
-- **Share your GitHub link** on LinkedIn, your resume, and portfolio.
-- **Link it to Tableau Public** to make it interactive.
+👥 Stakeholders
 
----
+Airbnb Hosts: Optimize pricing and occupancy.
 
-### **🚀 Next Steps**
-✅ **Upload files to GitHub.**  
-✅ **Write a clean README.**  
-✅ **Post the project on LinkedIn to showcase your skills!**  
+Travelers: Find affordable, well-reviewed stays.
 
-Let me know if you need help **refining the README or structuring the repo!** 🚀🔥
+City Planners: Assess Airbnb’s impact on neighborhoods.
+
+🔍 Key Questions
+
+1. Business Goals
+
+What affects rental prices in Seattle?
+
+Which neighborhoods are most profitable?
+
+How do listing features impact occupancy rates?
+
+2. Customer Behavior
+
+What trends exist in guest reviews?
+
+What are the busiest Airbnb months?
+
+How does the length of stay change by season?
+
+3. Operations & Trends
+
+Do certain features attract more bookings?
+
+How does pricing change with the season?
+
+Which areas have the highest Airbnb density?
+
+📊 Findings & Insights
+
+1️⃣ Pricing Adjustments Needed
+
+✅ Use dynamic pricing to reduce winter vacancies and maximize summer revenue.
+✅ Luxury listings should reconsider pricing as ultra-expensive options struggle with demand.
+
+2️⃣ Neighborhood-Specific Strategies
+
+✅ Lower prices or adjust offerings in high-vacancy areas (e.g., Industrial District, Roxhill).
+✅ Increase pricing or listings in high-demand areas (e.g., Portage Bay, Interbay).
+
+3️⃣ Budget-Friendly Options Drive Engagement
+
+✅ Listings under $100 attract more guests and reviews.
+✅ New hosts should price competitively in high-demand locations.
+
+4️⃣ Marketing & Listing Optimization
+
+✅ Broadway & International District have many listings but high vacancies – better marketing needed.
+✅ Offer discounts for long-term stays in off-peak months.
+
+📌 Booking & Availability Trends
+
+1️⃣ High Vacancy in Some Areas
+
+🔹 100% availability year-round in the Industrial District – almost no bookings.
+🔹 Other high-vacancy areas: Roxhill, Rainier View, Briarcliff.
+
+🛠 Takeaway:
+
+High availability may mean overpricing or poor marketing.
+
+Hosts should adjust pricing or improve listings.
+
+2️⃣ Seasonal Demand & Peak Booking Months
+
+🔹 Peak season: May – September (high occupancy).
+🔹 Slow season: November – January (high vacancies).
+
+🛠 Takeaway:
+
+Summer = higher prices. Winter = lower prices or discounts for long-term stays.
+
+📌 Pricing & Neighborhood Trends
+
+3️⃣ Flat Pricing Strategy
+
+🔹 Avg. price = $171.4, stays the same all year.
+🔹 Winter prices are high despite low demand.
+
+🛠 Takeaway:
+
+Hosts should adjust prices based on demand trends.
+
+4️⃣ Oversupply of Listings in Some Areas
+
+🔹 Most listings in: Broadway, Belltown, University District.
+🔹 Fewest listings in: Industrial District, Holly Park, Rainier View.
+
+🛠 Takeaway:
+
+High-competition areas need better pricing/marketing.
+
+Underserved areas might be an opportunity for new listings.
+
+5️⃣ Luxury Listings Struggle
+
+🔹 High-end listings ($3,000+) have low engagement.
+🔹 Lower luxury tiers ($1,000-$2,000) perform slightly better.
+
+🛠 Takeaway:
+
+Seattle has low demand for ultra-luxury listings. Hosts may need to reposition pricing or improve amenities.
+
+📌 Tools Used
+
+[Tableau](https://public.tableau.com/app/profile/gabe.puente2118/viz/Seattle-Airbnb-Analysis_17423618274450/SeasonalPriceFluctuationAnalysis)
+
+SQL
