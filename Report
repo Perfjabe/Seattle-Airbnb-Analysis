@@ -1,0 +1,103 @@
+Seattle Airbnb Market Analysis Report
+
+1. Introduction
+
+Seattle’s Airbnb market has been analyzed using various datasets to uncover key insights on pricing trends, occupancy rates, and revenue generation across different neighborhoods. This report summarizes the findings and provides data-driven recommendations for Airbnb hosts, travelers, and city planners.
+
+2. Data Overview
+
+The analysis is based on Airbnb data for Seattle, including:
+
+Listings.csv: Details about Airbnb properties, including location, price, and reviews.
+
+Calendar.csv: Availability and pricing data over time.
+
+Reviews.csv: Customer feedback and ratings.
+
+Neighborhoods.csv & GeoJSON: Geospatial information on Seattle’s neighborhoods.
+
+3. Business Questions & Objectives
+
+Key Questions:
+
+What factors drive higher rental prices in Seattle?
+
+Which neighborhoods are most profitable for Airbnb hosts?
+
+How do listing features (e.g., amenities, reviews) correlate with occupancy rates?
+
+What are the seasonal demand trends in Seattle’s Airbnb market?
+
+How does price affect occupancy and revenue?
+
+4. Data Insights & Findings
+
+4.1 Pricing Trends
+
+Average Price: $177.87
+
+Price Range: $20 - $3,000
+
+Luxury Listings ($3,000+) struggle with bookings, showing high availability and low review counts.
+
+Budget listings ($79-$125) receive the most engagement and highest reviews.
+
+Pricing remains stable year-round (~$171.4/month) despite clear seasonal demand shifts.
+
+4.2 Occupancy & Demand Trends
+
+Peak Demand: August - September (28.5% availability, lowest of the year)
+
+Lowest Demand: December - January (65-73% availability, highest of the year)
+
+Broadway, Belltown, and U-District have the highest supply and competition.
+
+High-priced listings tend to have high availability (low demand).
+
+Listings in Interbay, Portage Bay, and Victory Heights have the highest demand (low availability & high review counts).
+
+4.3 Neighborhood Analysis
+
+Most Competitive Areas: Broadway, Belltown, University District.
+
+Low-Demand Areas: Industrial District, Briarcliff, Roxhill (100% availability, little to no demand).
+
+Mid-Priced Neighborhoods with Strong Demand: Pike-Market, Central Business District, Portage Bay (~$185 avg price, strong bookings).
+
+4.4 Guest Engagement & Reviews
+
+2023 had a record-high 107,945 reviews, with 2024 trending high (94,788).
+
+Listings under $100 receive the most reviews and bookings.
+
+Top-reviewed neighborhoods: Whittier Heights, Southeast Magnolia, Central Business District.
+
+5. Recommendations & Actionable Insights
+
+5.1 Pricing Strategy Adjustments
+
+✅ Implement dynamic pricing to optimize revenue in high and low-demand seasons.
+✅ Luxury listings should reconsider pricing or offer better value-added features.
+✅ Hosts in low-demand areas (Industrial District, Briarcliff, Roxhill) should lower prices or improve listing strategies.
+
+5.2 Seasonal Pricing Optimization
+
+✅ Increase pricing during peak seasons (August-September).
+✅ Lower rates or offer discounts during winter months (December-January) to improve occupancy.
+✅ Consider long-term stay discounts to reduce vacancy during slow months.
+
+5.3 Neighborhood-Specific Strategies
+
+✅ Increase pricing in high-demand areas (Portage Bay, Interbay, Victory Heights) to maximize revenue.
+✅ Hosts in oversupplied neighborhoods (Broadway, Belltown, U-District) should focus on competitive pricing and improving listing quality.
+✅ Market analysis suggests underserved areas with high demand (e.g., Portage Bay could support more listings).
+
+5.4 Listing Optimization for Better Engagement
+
+✅ Optimize listings with better marketing, professional photos, and detailed descriptions.
+✅ Improve amenities, response time, and guest experience to drive higher bookings.
+✅ Lower-priced listings consistently outperform high-priced options in guest engagement.
+
+6. Conclusion
+
+Seattle’s Airbnb market presents clear trends in pricing, demand, and guest engagement. The biggest opportunities lie in dynamic pricing, seasonal adjustments, and strategic neighborhood pricing. Hosts should focus on adjusting prices based on seasonal demand, optimizing listings for engagement, and identifying high-demand neighborhoods to maximize profitability.
