@@ -1,6 +1,7 @@
 Seattle Airbnb Analysis 🏠📊
 
 📌 Tools Used
+
 [Tableau](https://public.tableau.com/app/profile/gabe.puente2118/viz/Seattle-Airbnb-Analysis_17423618274450/SeasonalPriceFluctuationAnalysis)
 
 SQL
