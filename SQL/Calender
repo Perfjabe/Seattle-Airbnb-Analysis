@@ -1,0 +1,86 @@
+SELECT
+COUNT(*) AS total_rows,
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- 1048575
+
+SELECT
+COUNT(*) AS total_rows,
+COUNT(DISTINCT CONCAT(listing_id, CAST(date AS STRING))) AS unique_rows
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- no duplicates
+
+SELECT
+COUNT(*) AS total_rows,
+COUNTIF(listing_id IS NULL) AS missing_listing_id,
+COUNTIF(date IS NULL) AS missing_date,
+COUNTIF(price IS NULL) AS missing_price,
+COUNTIF(minimum_nights IS NULL) AS missing_minimum_nights,
+COUNTIF(maximum_nights IS NULL) AS missing_maximum_nights
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- no missing data
+
+SELECT
+MIN(date) AS earliest_date,
+MAX(date) AS latest_date
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- 2024-09-21 to 2025-09-20
+
+SELECT
+MIN(price) AS min_price,
+MAX(price) AS max_price,
+AVG(price) AS avg_price
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- min 20 - max 3000, avg 177.87
+
+SELECT
+MIN(minimum_nights) AS min_minimum_nights,
+MAX(minimum_nights) AS max_minimum_nights,
+MIN(maximum_nights) AS min_maximum_nights,
+MAX(maximum_nights) AS max_maximum_nights
+FROM `seattleairbnb-450821.airbnb.calender`;
+
+-- 1, 365, 1, 10000
+
+SELECT 
+    date, 
+    COUNT(*) AS total_listings,
+    SUM(CAST(available AS INT64)) AS available_listings,
+    (SUM(CAST(available AS INT64)) * 100.0 / COUNT(*)) AS availability_percentage
+FROM `seattleairbnb-450821.airbnb.calender`
+GROUP BY date
+ORDER BY availability_percentage ASC;
+
+-- September 21, 2024, has the lowest availability (9.95%), with other peak demand days around late September and early October
+
+SELECT 
+    date, 
+    COUNT(*) AS total_listings,
+    SUM(CAST(available AS INT64)) AS available_listings,
+    (SUM(CAST(available AS INT64)) * 100.0 / COUNT(*)) AS availability_percentage
+FROM `seattleairbnb-450821.airbnb.calender`
+GROUP BY date
+ORDER BY availability_percentage DESC;
+
+-- December 17, 2024, has the highest availability (73.55%), with mid-December showing lower demand overall.
+
+SELECT 
+    EXTRACT(YEAR FROM date) AS year,
+    EXTRACT(MONTH FROM date) AS month,
+    COUNT(*) AS total_listings,
+    SUM(CAST(available AS INT64)) AS available_listings,
+    (SUM(CAST(available AS INT64)) * 100.0 / COUNT(*)) AS availability_percentage
+FROM `seattleairbnb-450821.airbnb.calender`
+GROUP BY year, month
+ORDER BY availability_percentage ASC;
+
+-- Lowest Availability (Peak Demand):
+-- September 2024 (28.51%) had the lowest availability, indicating high demand.
+-- August and September 2025 (37-38%) also showed relatively lower availability, suggesting late summer to early fall is a high-booking period.
+
+-- Highest Availability (Lower Demand):
+-- December 2024 (65.68%) and January 2025 (64.15%) had the highest availability, suggesting these months have lower demand.
