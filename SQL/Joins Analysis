@@ -1,0 +1,225 @@
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)), 2) AS avg_availability
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price
+ORDER BY avg_availability DESC;
+
+-- Listings in University District, Broadway, Broadview, and Harrison/Denny-Blaine have 100% availability.
+-- Prices range from $109 - $195, meaning even mid-range listings are staying empty.
+-- University District has multiple vacant listings, suggesting over-supply or low demand.
+
+SELECT 
+    l.neighbourhood, 
+    EXTRACT(MONTH FROM c.date) AS month,
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.neighbourhood, month
+ORDER BY avg_availability_percentage DESC;
+
+-- Briarcliff, Meadowbrook, Roxhill, Industrial District, and Rainier View have 100% availability for multiple months, indicating low bookings.  
+-- Industrial District remains fully available year-round, suggesting oversupply or low demand.  
+-- Pioneer Square, Yesler Terrace, and International District have slightly lower availability (~94-96%) but still high vacancy.
+
+SELECT 
+    l.neighbourhood, 
+    ROUND(AVG(l.adjusted_price), 2) AS avg_price,
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.neighbourhood
+ORDER BY avg_availability_percentage DESC;
+
+-- Industrial District has the highest avg price ($800) and 100% availability, indicating zero demand.  
+-- Pioneer Square, Briarcliff, and International District have high availability (75%+) despite moderate pricing.  
+-- Pike-Market & Central Business District show better demand (~65% availability) despite higher avg prices ($235-$243).  
+-- Lower-priced areas like Pinehurst ($92.89) still have over 60% availability, suggesting pricing isn't the only factor.  
+
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    l.number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price, l.number_of_reviews
+HAVING avg_availability_percentage > 75 AND l.adjusted_price > 200
+ORDER BY avg_availability_percentage DESC, l.adjusted_price DESC
+LIMIT 20;
+
+-- High-priced listings ($300+) with 100% availability indicate low demand.  
+-- Several listings have zero reviews, suggesting lack of bookings.  
+-- Broadway & Industrial District have multiple overpriced, vacant properties.  
+-- Some listings with reviews (Mann & Stevens) still remain fully available, indicating potential overpricing.  
+
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    l.number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price, l.number_of_reviews
+HAVING avg_availability_percentage > 75 AND l.number_of_reviews < 5
+ORDER BY avg_availability_percentage DESC, l.adjusted_price DESC
+LIMIT 20;
+
+-- Most listings have 100% availability but lack engagement
+
+SELECT 
+    EXTRACT(YEAR FROM r.date) AS review_year, 
+    COUNT(*) AS total_reviews
+FROM `seattleairbnb-450821.airbnb.reviews` r
+GROUP BY review_year
+ORDER BY review_year DESC;
+
+-- 2023 had the highest reviews (107,945), while 2024 is trending high (94,788).
+-- Reviews increased steadily from 2014, except for a drop in 2020 (pandemic impact).
+
+SELECT 
+    l.adjusted_price, 
+    ROUND(AVG(l.number_of_reviews), 2) AS avg_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+GROUP BY l.adjusted_price
+ORDER BY adjusted_price DESC
+LIMIT 20;
+
+-- Listings over $9,000-$3,000 have almost no reviews, indicating low demand for ultra-luxury stays.
+-- Moderate luxury listings ($1,000-$2,000) have slightly higher reviews, but still low engagement.
+
+
+SELECT 
+    l.neighbourhood, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    ROUND(AVG(l.number_of_reviews), 2) AS avg_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.neighbourhood
+HAVING avg_availability_percentage < 50 AND avg_reviews > 20
+ORDER BY avg_reviews DESC;
+
+-- Interbay, Portage Bay, and Victory Heights have the highest demand, with 307-233 avg reviews.
+-- High review counts suggest strong engagement and desirability in these areas.
+
+SELECT 
+    EXTRACT(MONTH FROM c.date) AS month, 
+    ROUND(AVG(l.adjusted_price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY month
+ORDER BY month ASC;
+
+-- Price remains stable at ~$171.4 across all months, indicating minimal seasonal price fluctuations.
+-- Suggests a flat pricing strategy in the market.
+
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    l.number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price, l.number_of_reviews
+HAVING avg_availability_percentage > 50 AND l.number_of_reviews > 20
+ORDER BY avg_availability_percentage DESC, l.number_of_reviews DESC
+LIMIT 20;
+
+-- University District, International District, and Matthews Beach have the highest engagement.
+-- Some listings with 100% availability still receive consistent reviews, indicating long-term popularity.
+
+SELECT 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    ROUND(AVG(l.number_of_reviews), 2) AS avg_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.adjusted_price
+HAVING avg_availability_percentage < 80 AND avg_reviews > 10
+ORDER BY avg_reviews DESC;
+
+-- Higher-priced listings ($500+) are still receiving many reviews, suggesting strong desirability.
+-- Lower-priced listings ($48-$132) also maintain steady engagement, indicating good affordability.
+
+SELECT 
+    l.neighbourhood, 
+    ROUND(AVG(l.adjusted_price), 2) AS avg_price,
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    ROUND(AVG(l.number_of_reviews), 2) AS avg_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.neighbourhood
+HAVING avg_availability_percentage < 50 AND avg_price > 150
+ORDER BY avg_price DESC;
+
+-- Rainier View has the highest avg price ($365) but maintains strong demand with 28% availability.
+-- Sunset Hill, Windermere, and Mount Baker show high prices ($200+) but moderate availability.
+-- Popular mid-range neighborhoods like Portage Bay ($185) and View Ridge ($183) have high reviews, indicating strong demand.
+
+SELECT 
+    EXTRACT(MONTH FROM c.date) AS month, 
+    ROUND(AVG(l.adjusted_price), 2) AS avg_price,
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY month
+ORDER BY month ASC;
+
+-- Prices remain stable at ~$171.4 across all months.
+-- Availability drops sharply in summer (May-Aug), indicating peak booking season.
+-- Winter months (Nov-Jan) see higher availability, confirming seasonal demand shifts.
+
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(l.number_of_reviews), 2) AS avg_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price
+HAVING avg_reviews > 50 AND l.adjusted_price < 100
+ORDER BY avg_reviews DESC;
+
+-- Low-cost listings (<$100) receive the most engagement, confirming affordability as a key factor.
+-- Properties in Whittier Heights, Southeast Magnolia, and Central Business District dominate top reviews.
+-- Shared spaces and budget-friendly listings attract significantly higher reviews.
+
+SELECT 
+    l.id, 
+    l.name, 
+    l.neighbourhood, 
+    l.adjusted_price, 
+    ROUND(AVG(CAST(c.available AS INT64)) * 100, 2) AS avg_availability_percentage,
+    l.number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN `seattleairbnb-450821.airbnb.calender` c
+ON l.id = c.listing_id
+GROUP BY l.id, l.name, l.neighbourhood, l.adjusted_price, l.number_of_reviews
+HAVING avg_availability_percentage > 60 AND l.number_of_reviews > 20
+ORDER BY avg_availability_percentage DESC, l.number_of_reviews DESC;
+
+-- University District, International District, and Matthews Beach have high review counts despite 100% availability.
+-- Suggests a mix of long-term bookings and strong engagement despite less frequent short-term stays.
+-- Some listings maintain high availability yet remain highly rated.
+
