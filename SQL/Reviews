@@ -1,0 +1,102 @@
+SELECT * FROM `seattleairbnb-450821.airbnb.reviews` LIMIT 1000;
+
+SELECT listing_id, COUNT(*) AS total_reviews
+FROM `seattleairbnb-450821.airbnb.reviews`
+GROUP BY listing_id
+ORDER BY total_reviews DESC
+LIMIT 10;
+
+-- id 3861673 has 1450 total_reviews, id 25002 has 1075 total_reviews, id 11398085 has 961 total_reviews
+
+SELECT EXTRACT(YEAR FROM date) AS year, COUNT(*) AS total_reviews
+FROM `seattleairbnb-450821.airbnb.reviews`
+GROUP BY year
+ORDER BY total_reviews DESC;
+
+-- reviews peaked in 2023 with 107945, while 2024 has 94788 usually growing each year 
+
+SELECT listing_id, MAX(date) AS last_review_date
+FROM `seattleairbnb-450821.airbnb.reviews`
+GROUP BY listing_id
+ORDER BY last_review_date DESC
+LIMIT 10;
+
+-- ids: 20096729, 8597297, 21213854 and more have been last reviewed 2024-09-20
+
+SELECT 
+    l.id, l.name, l.adjusted_price, COUNT(r.listing_id) AS total_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+LEFT JOIN `seattleairbnb-450821.airbnb.reviews` r
+ON l.id = r.listing_id
+GROUP BY l.id, l.name, l.adjusted_price
+ORDER BY total_reviews DESC
+LIMIT 10;
+
+SELECT id, name, adjusted_price, availability_365, number_of_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final`
+WHERE id IN (3861673, 25002, 11398085);
+
+-- Cottage in the Heart of the City availability 0, priced at 125
+-- Beautiful Private  Spot in North Ballard availability 139, priced at 89
+-- Beautiful Guest Suite for 2 in Ballard availability 220, priced at 96
+
+SELECT adjusted_price, availability_365, COUNT(r.listing_id) AS total_reviews
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+LEFT JOIN `seattleairbnb-450821.airbnb.reviews` r
+ON l.id = r.listing_id
+GROUP BY adjusted_price, availability_365
+ORDER BY total_reviews DESC;
+
+-- Listings priced between $79 - $125 dominate in total reviews, showing strong guest demand for budget stays.
+-- The highest-reviewed listing ($96, 220-day availability) has 1,450 reviews, indicating consistent bookings.
+-- Higher review counts are linked to lower pricing, suggesting budget listings attract more guests.
+
+SELECT l.id, l.name, l.neighbourhood, l.adjusted_price, r.last_review_date
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN (
+    SELECT listing_id, MAX(date) AS last_review_date
+    FROM `seattleairbnb-450821.airbnb.reviews`
+    GROUP BY listing_id
+) r
+ON l.id = r.listing_id
+ORDER BY last_review_date DESC
+LIMIT 10;
+
+-- The most recently reviewed listings (as of September 20, 2024) are located in Belltown, Arbor Heights, Alki, Atlantic, and Adams.
+-- Prices range from $101 - $344, suggesting a mix of budget & mid-range properties receive fresh engagement.
+-- Belltown appears multiple times, reinforcing its status as a high-demand Airbnb area.
+
+SELECT EXTRACT(YEAR FROM r.last_review_date) AS year, COUNT(*) AS total_active_listings
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN (
+    SELECT listing_id, MAX(date) AS last_review_date
+    FROM `seattleairbnb-450821.airbnb.reviews`
+    GROUP BY listing_id
+) r
+ON l.id = r.listing_id
+GROUP BY year
+ORDER BY year DESC;
+
+-- The number of active Airbnb listings has surged in 2024 (4,767), marking a significant increase from previous years.
+-- 2023 (357 listings) and 2022 (124 listings) had much lower activity, possibly due to post-pandemic recovery.
+-- Listings before 2020 show little to no activity, suggesting older hosts left the market or listings became inactive.
+-- This could indicate either new market entrants or reactivation of previously inactive listings.
+
+SELECT EXTRACT(YEAR FROM r.last_review_date) AS year, ROUND(AVG(l.adjusted_price), 2) AS avg_price
+FROM `seattleairbnb-450821.airbnb.listings_final` l
+JOIN (
+    SELECT listing_id, MAX(date) AS last_review_date
+    FROM `seattleairbnb-450821.airbnb.reviews`
+    GROUP BY listing_id
+) r
+ON l.id = r.listing_id
+GROUP BY year
+ORDER BY year DESC;
+
+-- The average adjusted Airbnb price has fluctuated over the years, showing a general decline since 2015.
+-- 2024's average price is $182.48, up from 2023 ($172.15), suggesting a minor price recovery.
+-- Prices peaked in 2015 at $288.5 but dropped sharply in 2018 ($143.55), possibly due to increased competition or regulatory shifts.
+-- Recent years (2022-2024) show price stabilization in the $170-$180 range, indicating market balance.
+-- Further analysis is needed to determine if pricing trends correlate with supply growth and demand fluctuations.
+
+
