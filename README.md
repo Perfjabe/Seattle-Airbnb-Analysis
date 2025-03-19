@@ -1,12 +1,21 @@
 Seattle Airbnb Analysis 🏠📊
 
+📌 Tools Used
+[Tableau](https://public.tableau.com/app/profile/gabe.puente2118/viz/Seattle-Airbnb-Analysis_17423618274450/SeasonalPriceFluctuationAnalysis)
+
+SQL
+
+Data Source 
+
+[Inside Airbnb Open Data](https://insideairbnb.com/get-the-data/)
+
 📌 Overview
 
 This project explores Seattle Airbnb data to understand pricing trends, occupancy rates, and revenue across neighborhoods.
 
 📂 Datasets Used
 
-[Inside Airbnb Open Data](https://insideairbnb.com/get-the-data/)
+
 
 Listings.csv: Airbnb listing details (location, price, reviews).
 
@@ -125,8 +134,4 @@ Underserved areas might be an opportunity for new listings.
 
 Seattle has low demand for ultra-luxury listings. Hosts may need to reposition pricing or improve amenities.
 
-📌 Tools Used
 
-[Tableau](https://public.tableau.com/app/profile/gabe.puente2118/viz/Seattle-Airbnb-Analysis_17423618274450/SeasonalPriceFluctuationAnalysis)
-
-SQL
